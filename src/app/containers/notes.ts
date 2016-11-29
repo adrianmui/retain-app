@@ -41,6 +41,11 @@ export class NotesContainer {
     .subscribe(response => this.notes = response.data);
   }
 
+  onCreateNote(note) {
+    this.noteService.createNote(note)
+    .subscribe(note => this.notes.push(note));
+  }
+
   onNoteChecked(note) {
     this.noteService.completeNote(note)
     .subscribe(note => 
@@ -50,8 +55,4 @@ export class NotesContainer {
       });
   }
 
-  onCreateNote(note) {
-    this.noteService.createNote(note)
-    .subscribe(note => this.notes.push(note));
-  }
 };

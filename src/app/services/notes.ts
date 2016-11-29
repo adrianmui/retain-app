@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import { ApiService } from './api';
+import 'rxjs/Rx';
+
+@Injectable()
 
 export class NoteService {
 
