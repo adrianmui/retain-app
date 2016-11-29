@@ -46,7 +46,7 @@ export class ApiService {
   post(path, body): Observable<any> {
     return this.http.post(
       `${this.api_url}${path}`,
-      JSON.strigify(body),
+      JSON.stringify(body),
       {headers: this.headers}
     ).map(this.checkForError)
     .catch(err => Observable.throw(err))
@@ -60,12 +60,4 @@ export class ApiService {
     .catch(err => Observable.throw(err))
     .map(this.getJson);
   }
-
-
-
-
-
-
-
-
 }

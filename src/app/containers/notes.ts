@@ -1,6 +1,5 @@
-import { 
-  Component
-} from '@angular/core';
+import { Component } from '@angular/core';
+import { NoteService } from '../services';
 
 @Component({
   selector: 'notes-container',
@@ -22,8 +21,8 @@ import {
           <note-card
             class="col-xs-4"
             [note]="note"
-            *ngFor="let note of notes; let i = index;"
-            (checked)="onNoteChecked(i)"
+            *ngFor="let note of notes;"
+            (checked)="onNoteChecked($event)"
           >
           </note-card>
         </div>
@@ -34,38 +33,25 @@ import {
 
 export class NotesContainer {
   notes = [
-  {
-    title: 'this is note',
-    value: 'Eat some Dogs',
-    color: '#3b5998'
-  },
-  {
-    title: 'this is second',
-    value: 'Eat some Cats',
-    color: 'lightblue'
-  },
-  {
-    title: 'this is thid',
-    value: 'Eat some Boobs',
-    color: 'red'
-  },
-  {
-    title: 'this is thid',
-    value: 'Eat some Boobs',
-    color: 'indigo'
-  },
-  {
-    title: 'this is thid',
-    value: 'Eat some Boobs',
-    color: 'grey'
-  }
-  ]
+  
+  ];
 
-  onNoteChecked(i:number) {
-    this.notes.splice(i, 1);
+  constructor(private noteService: NoteService) {
+    this.noteService.getNotes()
+    .subscribe(response => this.notes = response.data);
+  }
+
+  onNoteChecked(note) {
+    this.noteService.completeNote(note)
+    .subscribe(note => 
+      {
+        const i = this.notes.findIndex(localNote => localNote.id === note.id);
+        this.notes.splice(i, 1);
+      });
   }
 
   onCreateNote(note) {
-    this.notes.push(note);
+    this.noteService.createNote(note)
+    .subscribe(note => this.notes.push(note));
   }
 };
