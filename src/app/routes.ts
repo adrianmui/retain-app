@@ -10,7 +10,7 @@ export const routes: ModuleWithProviders = RouterModule.forRoot([
         { 
           path: '',
           component: NotesContainer
-        },
+        },  
         {
           path: 'about',
           component: About
